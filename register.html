@@ -1,0 +1,79 @@
+{% extends 'students/base.html' %}
+{% block body %}
+
+<div class="container mt-5" style="max-width: 450px;">
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+        <div class="card-body p-4">
+
+            <!-- Header -->
+            <div class="text-center mb-4">
+                <i class="fa-solid fa-user-plus fa-4x text-primary"></i>
+                <h2 class="mt-2 fw-bold">Create Account</h2>
+                <p class="text-muted small">Join Student Management System</p>
+            </div>
+
+            <!-- Messages -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <!-- Form -->
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                <!-- Username -->
+                <div class="mb-3">
+                    <label class="form-label" for="id_username">Username</label>
+                    <input type="text" name="username" class="form-control" id="id_username" value="{{ form.username.value|default_if_none:'' }}" required>
+                    {% if form.username.errors %}
+                        <div class="text-danger small mt-1">{{ form.username.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    <label class="form-label" for="id_password1">Password</label>
+                    <input type="password" name="password1" class="form-control" id="id_password1" required>
+                    {% if form.password1.errors %}
+                        <div class="text-danger small mt-1">{{ form.password1.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="mb-3">
+                    <label class="form-label" for="id_password2">Confirm Password</label>
+                    <input type="password" name="password2" class="form-control" id="id_password2" required>
+                    {% if form.password2.errors %}
+                        <div class="text-danger small mt-1">{{ form.password2.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{% url 'login' %}" class="btn btn-outline-secondary">
+                        <i class="fa-solid fa-arrow-left me-2"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa-solid fa-user-plus me-2"></i> Register
+                    </button>
+                </div>
+
+            </form>
+
+            <!-- Footer -->
+            <div class="text-center mt-3">
+                <small class="text-muted">
+                    Already have an account? <a href="{% url 'login' %}">Login here</a>
+                </small>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
